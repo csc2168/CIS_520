@@ -4,4 +4,7 @@
 *.ppm
 FullIJCNN2013/
 venv/
-FCN.tensorflow/Model_zoo
+FCN.tensorflow/Model_zoo/
+FCN.tensorflow/log*/
+*.swp
+FCN.tensorflow/__pycache__/
