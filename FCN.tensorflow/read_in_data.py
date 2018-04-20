@@ -29,7 +29,8 @@ def read_prediction_set(data_dir):
 
 def read_dataset(data_dir):
     pickle_filename = "dataset.pickle"
-    pickle_filepath = os.path.join(data_dir, pickle_filename)
+    pickle_filepath = os.path.join(data_dir,os.sep, pickle_filename)
+    #pickle_filepath =data_dir + '/' + pickle_filename
     if not os.path.exists(pickle_filepath):
         result = create_image_lists(data_dir)
         print ("Pickling ...")
@@ -64,8 +65,8 @@ def create_image_lists(image_dir):
             print('No files found')
         else:
             for f in file_list:
-                filename = os.path.splitext(f.split("/")[-1])[0]
-                annotation_file = os.path.join(image_dir, "annotations", directory, "label_" + filename + '.png')
+                filename = os.path.splitext(f.split(os.sep)[-1])[0]
+                annotation_file = os.path.join(image_dir, "annotations", directory, filename + '.png')
                 if os.path.exists(annotation_file):
                     record = {'image': f, 'annotation': annotation_file, 'filename': filename}
                     image_list[directory].append(record)

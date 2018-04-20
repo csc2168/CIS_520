@@ -4,3 +4,4 @@
 *.ppm
 FullIJCNN2013/
 venv/
+FCN.tensorflow/Model_zoo

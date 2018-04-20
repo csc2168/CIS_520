@@ -12,9 +12,9 @@ from six.moves import xrange
 FLAGS = tf.flags.FLAGS
 tf.flags.DEFINE_integer("batch_size", "10", "batch size for training")
 tf.flags.DEFINE_string("logs_dir", "logs/", "path to logs directory")
-tf.flags.DEFINE_string("data_dir", "../FullIJCNN2013/png_images", "path to dataset")
+tf.flags.DEFINE_string("data_dir", "../../TrainIJCNN2013", "path to dataset")
 tf.flags.DEFINE_float("learning_rate", "1e-4", "Learning rate for Adam Optimizer")
-tf.flags.DEFINE_string("model_dir", "../FullIJCNN2013/gt_images/", "Path to vgg model mat")
+tf.flags.DEFINE_string("model_dir", "../../TrainIJCNN2013/", "Path to vgg model mat")
 tf.flags.DEFINE_bool('debug', "False", "Debug mode: True/ False")
 tf.flags.DEFINE_bool('image_augmentation', "True", "Image augmentation: True/ False")
 tf.flags.DEFINE_float('dropout', "0.5", "Probably of keeping value in dropout (valid values (0.0,1.0]")
