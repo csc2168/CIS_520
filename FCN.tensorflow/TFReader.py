@@ -46,13 +46,13 @@ class DatasetReader:
         #This is a workaround because decode_image does not return a static size, which breaks resize_images
         image = tf.image.decode_png(tf.read_file(image_filename))
         if self.image_options.get("resize", False):
-            image = tf.image.resize_images(image, (self.image_options["resize_size"], self.image_options["resize_size"]))
+            image = tf.image.resize_images(image, (self.image_options["resize_size"][0], self.image_options["resize_size"][1]))
         annotation = None
         if annotation_filename is not None:
             annotation = tf.image.decode_png(tf.read_file(annotation_filename))
             if self.image_options.get("resize", False):
                 annotation = tf.image.resize_images(annotation,
-                                               (self.image_options["resize_size"], self.image_options["resize_size"]))
+                                               (self.image_options["resize_size"][0], self.image_options["resize_size"][1]))
         if self.image_options.get("image_augmentation", False):
             #Return image, annotation if existing, and filename
             return self._augment_image(image, annotation) + (name, )

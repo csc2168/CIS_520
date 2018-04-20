@@ -25,5 +25,5 @@ with open("gt.txt") as csv_file:
         gt_im[y1:y2+1, x1:x2+1] = c
         gt_im = Image.fromarray(gt_im)
         
-        im.save(os.path.join("png_images", basename + ".png"))
-        gt_im.save(os.path.join("gt_images", basename + ".png"))
+        im.save(os.path.join("images", basename + ".png"))
+        gt_im.save(os.path.join("annotations", basename + ".png"))
