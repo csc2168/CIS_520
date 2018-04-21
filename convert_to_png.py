@@ -4,6 +4,7 @@ import numpy as np
 import csv
 import glob
 
+os.chdir('../TestIJCNN2013')
 if not os.path.exists("png_images"):
     os.mkdir("png_images")
 for im_name in glob.glob("*.ppm"):

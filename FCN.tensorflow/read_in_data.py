@@ -23,7 +23,7 @@ def read_prediction_set(data_dir):
     if not file_list:
         print('No files found')
     else:
-        image_list = [{'image': f, 'filename': os.path.splitext(f.split("/")[-1])[0]} for f in file_list]
+        image_list = [{'image': f, 'filename': os.path.splitext(f.split(os.sep)[-1])[0]} for f in file_list]
     print(('No. of files: %d' % len(image_list)))
     return image_list
 

@@ -21,8 +21,8 @@ with open("gt.txt") as csv_file:
         basename = os.path.splitext(im_name)[0]
         classes.append(int(c))
         im = Image.open(im_name)
-        gt_im = np.full(np.array(im).shape[:2], 43, dtype=np.uint8) #Set background to max class + 1
-        gt_im[y1:y2+1, x1:x2+1] = c
+        gt_im = np.full(np.array(im).shape[:2], 0, dtype=np.uint8) #Set background to max class + 1
+        gt_im[y1:y2+1, x1:x2+1] = 1
         gt_im = Image.fromarray(gt_im)
         
         im.save(os.path.join("images", basename + ".png"))
