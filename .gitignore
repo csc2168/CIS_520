@@ -2,6 +2,7 @@
 .idea
 *.png
 *.ppm
+*.zip
 FullIJCNN2013/
 venv/
 FCN.tensorflow/Model_zoo/
