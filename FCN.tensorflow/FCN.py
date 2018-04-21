@@ -10,7 +10,7 @@ import TFReader as dataset
 from six.moves import xrange
 
 FLAGS = tf.flags.FLAGS
-tf.flags.DEFINE_integer("batch_size", "2", "batch size for training")
+tf.flags.DEFINE_integer("batch_size", "1", "batch size for training")
 tf.flags.DEFINE_string("logs_dir", "logsB/", "path to logs directory")
 tf.flags.DEFINE_string("data_dir", "../../TrainIJCNN2013", "path to dataset")
 tf.flags.DEFINE_float("learning_rate", "1e-4", "Learning rate for Adam Optimizer")

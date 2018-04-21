@@ -29,7 +29,7 @@ def read_prediction_set(data_dir):
 
 def read_dataset(data_dir):
     pickle_filename = "dataset.pickle"
-    pickle_filepath = os.path.join(data_dir,os.sep, pickle_filename)
+    pickle_filepath = os.path.join(data_dir, pickle_filename)
     #pickle_filepath =data_dir + '/' + pickle_filename
     if not os.path.exists(pickle_filepath):
         result = create_image_lists(data_dir)
