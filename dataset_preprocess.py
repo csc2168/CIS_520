@@ -3,7 +3,7 @@ from PIL import Image
 import numpy as np
 import csv
 
-os.chdir('../TrainIJCNN2013')
+os.chdir('../FullIJCNN2013')
 
 if not os.path.exists("images"):
     os.mkdir("images")

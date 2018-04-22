@@ -1,11 +1,11 @@
 import os
 import random
-image_dir = "../TrainIJCNN2013/images"
-annotation_dir = "../TrainIJCNN2013/annotations"
+image_dir = "../FullIJCNN2013/images"
+annotation_dir = "../FullIJCNN2013/annotations"
 annotation_prefix = ""
 images = [f for f in os.listdir(image_dir) if f.endswith(".png")]
 random.shuffle(images)
-train_test_split_ratio = 1
+train_test_split_ratio = 0.8
 train_val_split_ratio = 0.8
 train_val = images[:int(train_test_split_ratio*len(images))]
 test = images[int(train_test_split_ratio*len(images)):]

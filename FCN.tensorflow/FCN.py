@@ -10,9 +10,9 @@ import TFReader as dataset
 from six.moves import xrange
 
 FLAGS = tf.flags.FLAGS
-tf.flags.DEFINE_integer("batch_size", "1", "batch size for training")
-tf.flags.DEFINE_string("logs_dir", "logsB/", "path to logs directory")
-tf.flags.DEFINE_string("data_dir", "../../TrainIJCNN2013", "path to dataset")
+tf.flags.DEFINE_integer("batch_size", "2", "batch size for training")
+tf.flags.DEFINE_string("logs_dir", "../../logsB/", "path to logs directory")
+tf.flags.DEFINE_string("data_dir", "../../FullIJCNN2013", "path to dataset")
 tf.flags.DEFINE_float("learning_rate", "1e-4", "Learning rate for Adam Optimizer")
 tf.flags.DEFINE_string("model_dir", "../../TrainIJCNN2013/", "Path to vgg model mat")
 tf.flags.DEFINE_bool('debug', "False", "Debug mode: True/ False")
@@ -23,7 +23,7 @@ tf.flags.DEFINE_string('mode', "train", "Mode train/ test/ visualize/ predict") 
 MODEL_URL = 'http://www.vlfeat.org/matconvnet/models/beta16/imagenet-vgg-verydeep-19.mat'
 
 MAX_ITERATION = int(1e5 + 1)
-NUM_OF_CLASSESS = 2
+NUM_OF_CLASSESS = 2 # 44 change from 2 for logsBinary to 44 for logs with 44 classes
 IMAGE_SIZE = ( 800, 1360)
 
 def vgg_net(weights, image):
@@ -266,9 +266,10 @@ def main(argv=None):
             pred = sess.run(pred_annotation, feed_dict={image: predict_images,
                                                         keep_probability: 1.0})
             pred = np.squeeze(pred, axis=3)
+            name = "predict_" + predict_names[0].decode('utf-8')
 
             utils.save_image(pred[0].astype(np.uint8), os.path.join(FLAGS.logs_dir, "predictions"),
-                             name="predict_" + str(predict_names))
+                             name)
 
 
 if __name__ == "__main__":
