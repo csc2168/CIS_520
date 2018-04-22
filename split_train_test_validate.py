@@ -1,9 +1,9 @@
 import os
 import random
-image_dir = "images"
-annotation_dir = "annotations"
+image_dir = "../TrainIJCNN2013/images"
+annotation_dir = "../TrainIJCNN2013/annotations"
 annotation_prefix = ""
-images = [f for f in os.listdir('images') if f.endswith(".png")]
+images = [f for f in os.listdir(image_dir) if f.endswith(".png")]
 random.shuffle(images)
 train_test_split_ratio = 0.8
 train_val_split_ratio = 0.8
