@@ -5,9 +5,9 @@ from skimage.transform import resize
 import re
 
 
-predictions_folder = "predictions"
+predictions_folder = "Binarypredictions"
 orig_image_folder = "test_images"
-cropped_image_folder = "predicted_cropped_images"
+cropped_image_folder = "bin_predicted_cropped_images"
 cropped_size = (32, 32)
 
 if not os.path.exists(cropped_image_folder):
