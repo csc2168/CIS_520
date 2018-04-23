@@ -24,7 +24,7 @@ with open("gt.txt") as csv_file:
         classes.append(int(c))
         im = Image.open(im_name)
 
-        gt_im_path = os.path.exists(os.path.join(annotations_dir, basename + '.png'))
+        gt_im_path = os.path.join(annotations_dir, basename + '.png')
         if os.path.exists(gt_im_path):
             gt_im = np.array(Image.open(gt_im_path))
         else:
