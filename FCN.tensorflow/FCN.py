@@ -141,18 +141,27 @@ def train(loss_val, var_list):
             utils.add_gradient_summary(grad, var)
     return optimizer.apply_gradients(grads)
 
+def reweight_by_class_ratio(annotation_image):
+    y, idx, count = tf.unique_with_counts(annotation_image)
+    class_weights = count / tf.reduce_sum(count)
+    return class_weights[idx]
 
 def main(argv=None):
     keep_probability = tf.placeholder(tf.float32, name="keep_probabilty")
     image = tf.placeholder(tf.float32, shape=[None, IMAGE_SIZE[0], IMAGE_SIZE[1], 3], name="input_image")
     annotation = tf.placeholder(tf.int32, shape=[None, IMAGE_SIZE[0], IMAGE_SIZE[1], 1], name="annotation")
+    weights = reweight_by_class_ratio(annotation)
 
     pred_annotation, logits = inference(image, keep_probability)
     tf.summary.image("input_image", image, max_outputs=FLAGS.batch_size)
     tf.summary.image("ground_truth", tf.cast(annotation, tf.uint8), max_outputs=FLAGS.batch_size)
     tf.summary.image("pred_annotation", tf.cast(pred_annotation, tf.uint8), max_outputs=FLAGS.batch_size)
-    loss = tf.reduce_mean((tf.nn.sparse_softmax_cross_entropy_with_logits(logits=logits,
+    # loss = tf.reduce_mean((tf.nn.sparse_softmax_cross_entropy_with_logits(logits=logits,
+    #                                                                       labels=tf.squeeze(annotation, squeeze_dims=[3]),
+    #                                                                       name="entropy")))
+    loss = tf.reduce_mean((tf.losses.sparse_softmax_cross_entropy(logits=logits,
                                                                           labels=tf.squeeze(annotation, squeeze_dims=[3]),
+                                                                          weights=weights,
                                                                           name="entropy")))
     loss_summary = tf.summary.scalar("entropy", loss)
 
