@@ -8,8 +8,8 @@ from collections import defaultdict
 
 prediction_folder = r"Predictions\BinaryPredictions\predictions"
 gt_image_folder = r"Predictions\BinaryPredictions\annotations"
-prediction_folder = r"Predictions\classesPrediction\predictions"
-gt_image_folder = r"Predictions\classesPrediction\annotations"
+prediction_folder = r"..\logsBReweight\predictions"
+gt_image_folder = r"..\FullIJCNN2013\annotations\testing"
 
 IOU = []
 IOU_per_class = defaultdict(list)

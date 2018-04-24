@@ -11,7 +11,7 @@ from six.moves import xrange
 
 FLAGS = tf.flags.FLAGS
 tf.flags.DEFINE_integer("batch_size", "2", "batch size for training")
-tf.flags.DEFINE_string("logs_dir", "../../logs/", "path to logs directory")
+tf.flags.DEFINE_string("logs_dir", "../../logsBReweight/", "path to logs directory")
 tf.flags.DEFINE_string("data_dir", "../../FullIJCNN2013", "path to dataset")
 tf.flags.DEFINE_float("learning_rate", "1e-4", "Learning rate for Adam Optimizer")
 tf.flags.DEFINE_string("model_dir", "../../TrainIJCNN2013/", "Path to vgg model mat")
@@ -23,7 +23,7 @@ tf.flags.DEFINE_string('mode', "train", "Mode train/ test/ visualize/ predict") 
 MODEL_URL = 'http://www.vlfeat.org/matconvnet/models/beta16/imagenet-vgg-verydeep-19.mat'
 
 MAX_ITERATION = int(1e5 + 1)
-NUM_OF_CLASSESS = 44 # 44 change from 2 for logsBinary to 44 for logs with 44 classes
+NUM_OF_CLASSESS = 2 # 44 change from 2 for logsBinary to 44 for logs with 44 classes
 IMAGE_SIZE = ( 800, 1360)
 
 def vgg_net(weights, image):
@@ -142,9 +142,12 @@ def train(loss_val, var_list):
     return optimizer.apply_gradients(grads)
 
 def reweight_by_class_ratio(annotation_image):
-    y, idx, count = tf.unique_with_counts(annotation_image)
-    class_weights = count / tf.reduce_sum(count)
-    return class_weights[idx]
+    y, idx, count = tf.unique_with_counts(tf.reshape(annotation_image, [-1]))
+    probCounts = tf.cast(count, tf.float32)
+    probCounts = probCounts/tf.reduce_sum(probCounts);
+    negLogCount = -tf.log(probCounts)
+    class_weights = negLogCount / tf.reduce_sum(negLogCount)
+    return tf.gather_nd(class_weights, tf.reshape(idx, tf.shape(annotation_image)))
 
 def main(argv=None):
     keep_probability = tf.placeholder(tf.float32, name="keep_probabilty")
@@ -161,8 +164,7 @@ def main(argv=None):
     #                                                                       name="entropy")))
     loss = tf.reduce_mean((tf.losses.sparse_softmax_cross_entropy(logits=logits,
                                                                           labels=tf.squeeze(annotation, squeeze_dims=[3]),
-                                                                          weights=weights,
-                                                                          name="entropy")))
+                                                                          weights=weights)))
     loss_summary = tf.summary.scalar("entropy", loss)
 
     trainable_var = tf.trainable_variables()
