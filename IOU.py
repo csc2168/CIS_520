@@ -8,11 +8,16 @@ from matplotlib import pyplot as plt
 
 prediction_folder = r"Predictions\BinaryPredictions\predictions"
 gt_image_folder = r"Predictions\BinaryPredictions\annotations"
-prediction_folder = r"CNN_full_predicts"
+graph_folder="binary_graphs"
+
+
+# prediction_folder = r"CNN_full_predicts"
+# gt_image_folder = r"Predictions\classesPrediction\annotations"
+# graph_folder="CNN_graphs"
+
+prediction_folder = r"Predictions\classesPrediction\predictions"
 gt_image_folder = r"Predictions\classesPrediction\annotations"
-graph_folder="CNN_graphs"
-# prediction_folder = r"..\logsBReweight\predictions"
-# gt_image_folder = r"..\FullIJCNN2013\annotations\testing"
+graph_folder="multiclass_graphs"
 
 
 if not os.path.exists(graph_folder):
@@ -48,11 +53,11 @@ print(mean_IOU_per_class)
 plt.hist(IOU)
 plt.title("Mean IOU")
 plt.savefig(os.path.join(graph_folder, "mean_iou.png"))
-plt.show()
 
 for (c, ious) in IOU_per_class.items():
     #plt.figure()
     fig, ax = plt.subplots()
     plt.hist(ious)
     plt.title("Class {} IOU".format(c))
-    plt.savefig(os.path.join(graph_folder, "{}_iou.png".format(c)))
+    fig.savefig(os.path.join(graph_folder, "{}_iou.png".format(c)))
+    plt.close(fig)
