@@ -9,3 +9,4 @@ FCN.tensorflow/Model_zoo/
 FCN.tensorflow/log*/
 *.swp
 FCN.tensorflow/__pycache__/
+!/*_graphs/*.png
