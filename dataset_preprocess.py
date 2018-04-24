@@ -3,7 +3,7 @@ from PIL import Image
 import numpy as np
 import csv
 
-os.chdir('../FullIJCNN2013')
+os.chdir('FullIJCNN2013')
 
 image_dir = "images"
 annotations_dir = "annotations"

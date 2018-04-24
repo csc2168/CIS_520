@@ -6,11 +6,14 @@ import re
 import csv
 
 
-predictions_folder = "Binarypredictions"
-orig_image_folder = "test_images"
+predictions_folder = "Predictions/BinaryPredictions/predictions"
+orig_image_folder = "FullIJCNN2013"
 cropped_image_folder = "bin_predicted_cropped_images"
-class_prediction_file = 'class_prediction.csv'
+class_prediction_file = 'cnn_results.csv'
 out_multiclass_folder = "CNN_full_predicts"
+
+if not os.path.exists(out_multiclass_folder):
+    os.makedirs(out_multiclass_folder)
 
 with open(class_prediction_file, "rb") as f:
     csvfile = csv.reader(f)
@@ -19,7 +22,7 @@ with open(class_prediction_file, "rb") as f:
 if not os.path.exists(cropped_image_folder):
     os.makedirs(cropped_image_folder)
 
-re_identifier = re.compile(r'predict_\[b_(\d*)_\].png')
+re_identifier = re.compile(r'predict_(\d*).png')
 for full_predict_fname in glob.glob(os.path.join(predictions_folder, "*.png")):
     full_predict = io.imread(full_predict_fname)
     basename = os.path.basename(full_predict_fname)
@@ -39,7 +42,7 @@ for full_predict_fname in glob.glob(os.path.join(predictions_folder, "*.png")):
         # cropped_im = resize(cropped_im, cropped_size)
         cropped_im_name = "{}_{}.png".format(identifier, i)
         cropped_im = io.imread(os.path.join(cropped_image_folder, cropped_im_name))
-        full_image[region.coords] = cropped_im_class_dict[cropped_im_name]
+        full_predict[region.coords[:, 0], region.coords[:, 1]] = cropped_im_class_dict[cropped_im_name]
     io.imsave(os.path.join(out_multiclass_folder, basename), full_predict)
 
 
