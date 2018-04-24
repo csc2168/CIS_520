@@ -29,32 +29,37 @@ test_datagen = ImageDataGenerator(
         fill_mode='nearest')
 
 
-test = pd.read_csv('/home/csc2168/hw/cis/CIS_520/GTSRB/Final_Test/GT-final_test.csv',sep=';')
-
-
-# Should match cnn.py
+# Initialising the CNN
 cnn = Sequential()
+
+# Step 1 - Convolution
 cnn.add(Conv2D(32, (3, 3), input_shape = (32, 32, 3), padding = 'same', activation = 'relu'))
+
+# Step 2 - Pooling
 cnn.add(MaxPooling2D(pool_size = (2, 2)))
+
+# Adding a second convolutional layer
 cnn.add(Conv2D(64, (3, 3), activation = 'relu'))
 cnn.add(MaxPooling2D(pool_size = (2, 2)))
+
+# Add third convolutional layer
 cnn.add(Conv2D(128, (3, 3), activation = 'relu'))
 cnn.add(MaxPooling2D(pool_size = (2, 2)))
+
+
+# Step 3 - Flattening
 cnn.add(Flatten())
+
+# Step 4 - Full connection
 cnn.add(Dense(units = 1024, activation = 'relu'))
 cnn.add(Dropout(.5))
 cnn.add(Dense(units = 43, activation = 'softmax'))
+
+# Compiling the CNN
 cnn.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics = ['accuracy'])
 
 
 cnn.load_weights("cnn_weights4.h5")
-
-
-x_test = []
-y_test = []
-
-for file_name, class_id  in zip(list(test['Filename']), list(test['ClassId'])):
-	y_test.append(class_id)
 
 	
 test_datagen = ImageDataGenerator(
@@ -65,22 +70,17 @@ test_datagen = ImageDataGenerator(
 		horizontal_flip=True,
         fill_mode='nearest')
 		
-test_set = test_datagen.flow_from_directory('/home/csc2168/hw/cis/CIS_520/GTSRB/Final_Test/',
+test_set = test_datagen.flow_from_directory('/home/csc2168/hw/cis/CIS_520/predicted_cropped_images/',
 											class_mode = None,
 											shuffle = False,
                                             target_size = (32, 32),
                                             batch_size = 32)
-		
-
+						
+											
 preds = cnn.predict_generator(test_set)
 labels = preds.argmax(axis = 1);
+print(labels)
+df = pd.DataFrame({"filename": test_set.filenames, "label" : labels})
+df.to_csv("cnn_result.csv", index = False)
 
-accuracy = (labels == y_test)
-accuracy = accuracy.astype(int)
-num = (np.shape(labels))
-accuracy = accuracy.sum()
-print("Correctly Classified:")
-print(accuracy)
-print("Out of:")
-print(num[0])
 
