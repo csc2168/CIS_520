@@ -50,14 +50,14 @@ print("Meam IOU (i.e. Jaccard Similarity Score):", sum(IOU)/len(IOU))
 print(mean_IOU_per_class)
 
 
-plt.hist(IOU)
+plt.hist(IOU, bins=20)
 plt.title("Mean IOU")
 plt.savefig(os.path.join(graph_folder, "mean_iou.png"))
 
 for (c, ious) in IOU_per_class.items():
     #plt.figure()
     fig, ax = plt.subplots()
-    plt.hist(ious)
+    plt.hist(ious, bins=20)
     plt.title("Class {} IOU".format(c))
     fig.savefig(os.path.join(graph_folder, "{}_iou.png".format(c)))
     plt.close(fig)

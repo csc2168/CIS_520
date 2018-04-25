@@ -9,7 +9,7 @@ import csv
 predictions_folder = "Predictions/BinaryPredictions/predictions"
 orig_image_folder = "FullIJCNN2013"
 cropped_image_folder = "bin_predicted_cropped_images"
-class_prediction_file = 'cnn_results.csv'
+class_prediction_file = 'cnn_result2.csv'
 out_multiclass_folder = "CNN_full_predicts"
 
 if not os.path.exists(out_multiclass_folder):
